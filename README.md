@@ -6,19 +6,21 @@ cat > README.md <<EOF
 ## 📦 Descrizione
 
 Questa repository contiene il codice back-end per il progetto del Team 5.  
-La stack tecnologica verrà definita nelle fasi iniziali del progetto.
 
-## 🧑‍💻 Collaboratori
 
-- **Bassani David**
-- **Marco-Rocco**
-- **Mega Emme**
-- **Fabio-Bianco**
+## 🧑‍💻 Autori
+
+- @Bassani David [David Bassani]
+- @Marco-Rocco [Marco Rocco]
+- @Mega Emme [Michelangelo Musco]
+- @Fabio-Bianco [Fabio Bianco]
+- @Melo Melito [Carmelo Melito]
+- @defendimattia [Mattia Defendi]
+
 
 ## 📁 Struttura iniziale
 
 - \`src/\`: cartella principale del codice sorgente
-- \`docs/\`: documentazione, specifiche tecniche, diagrammi
 - \`.gitignore\`: file per ignorare cartelle/file temporanei
 - \`README.md\`: questo file
 
@@ -26,7 +28,4 @@ La stack tecnologica verrà definita nelle fasi iniziali del progetto.
 
 > Repository inizializzata – in attesa di definire stack e setup del progetto.
 
----
 
-_Progetto didattico condiviso. Vietata la duplicazione non autorizzata._
-EOF
