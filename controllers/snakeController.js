@@ -9,7 +9,7 @@ function index(req, res) {
         `
     SELECT *, snakes.id as snakes_id
     FROM products
-    JOIN snakes ON products_id = products.id
+    JOIN snakes ON product_id = products.id
     `
 
 
@@ -26,7 +26,7 @@ function show(req, res) {
 
     const sql =
 
-    `
+        `
     SELECT *, snakes.id as snakes_id
     FROM products
     JOIN snakes ON product_id = products.id
