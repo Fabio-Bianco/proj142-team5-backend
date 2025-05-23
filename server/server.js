@@ -1,6 +1,6 @@
 
 // Importa l'app configurata da app.js
-const app = require('./app');
+const app = require('../app');
 
 // Porta di ascolto 
 const PORT = process.env.PORT || 3000;
