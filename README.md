@@ -1,31 +1,48 @@
-cat > README.md <<EOF
-# proj142-team5-backend
+# 🐍 proj142-team5-backend
 
-🚀 Backend del progetto \`proj142-team5\`.
+🚀 Backend ufficiale del progetto `proj142-team5`: un e-commerce di **vendita serpenti**.  
+Questa repository contiene tutta la logica server-side per la gestione del sistema.
 
 ## 📦 Descrizione
 
-Questa repository contiene il codice back-end per il progetto del Team 5.  
+Questa è la base backend per un'applicazione e-commerce che gestisce la vendita al dettaglio di serpenti.  
 
+Il progetto è sviluppato con **Node.js**, **Express**, **Axios** e altri strumenti moderni dello stack **JavaScript**.
 
-## 🧑‍💻 Autori
+## 🧪 Tech Stack
 
-- @Bassani David [David Bassani]
-- @Marco-Rocco [Marco Rocco]
-- @Mega Emme [Michelangelo Musco]
-- @Fabio-Bianco [Fabio Bianco]
-- @Melo Melito [Carmelo Melito]
-- @defendimattia [Mattia Defendi]
+- **Node.js** — Runtime JavaScript server-side
+- **Express** — Web framework minimale e flessibile
+- **Axios** — Client HTTP per comunicazioni server-server
+- **npm** — Gestore pacchetti
+- (futuri aggiornamenti: database, autenticazione, ecc.)
 
 
 ## 📁 Struttura iniziale
 
-- \`src/\`: cartella principale del codice sorgente
-- \`.gitignore\`: file per ignorare cartelle/file temporanei
-- \`README.md\`: questo file
+proj142-team5-backend/
+├── src/
+│ ├── server.js # Entry point del backend
+│ └── app.js # Configurazione dell'app Express
+├── .gitignore
+├── package.json
+└── README.md
+
+
+## ▶️ Avvio del progetto
+
+npm install
+npm run dev
 
 ## 🚧 Stato del progetto
 
-> Repository inizializzata – in attesa di definire stack e setup del progetto.
+🧪 Repository inizializzata — struttura base pronta, stack definito. In fase di espansione con rotte, controller, modelli e business logic.
 
+## 🧑‍💻 Autori
 
+- @Bassani David (David Bassani)  
+- @Marco-Rocco (Marco Rocco)  
+- @Mega Emme (Michelangelo Musco)  
+- @Fabio-Bianco (Fabio Bianco)  
+- @Melo Melito (Carmelo Melito)  
+- @defendimattia (Mattia Defendi)  
