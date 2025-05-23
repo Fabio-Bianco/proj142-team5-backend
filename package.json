@@ -1,0 +1,25 @@
+{
+  "name": "proj142-team5-backend",
+  "version": "1.0.0",
+  "description": "cat > README.md <<EOF\r # proj142-team5-backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "dev": "node --watch server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fabio-Bianco/proj142-team5-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Fabio-Bianco/proj142-team5-backend/issues"
+  },
+  "homepage": "https://github.com/Fabio-Bianco/proj142-team5-backend#readme",
+  "dependencies": {
+    "axios": "^1.9.0",
+    "express": "^5.1.0"
+  }
+}
