@@ -14,6 +14,8 @@ Il progetto è sviluppato con **Node.js**, **Express**, **Axios** e altri strume
 - **Node.js** — Runtime JavaScript server-side
 - **Express** — Web framework minimale e flessibile
 - **Axios** — Client HTTP per comunicazioni server-server
+- **MySQL** — Database relazionale (usato con MySQL Workbench)
+- **mysql2** — Driver Node.js per collegamento a MySQL
 - **npm** — Gestore pacchetti
 - (futuri aggiornamenti: database, autenticazione, ecc.)
 
