@@ -6,7 +6,7 @@ const snakeController = require('../controllers/snakeController');
 //index
 router.get('/', snakeController.index);
 //show
-router.get('/:slug', snakeController.show);
+router.get('/:slug/:id', snakeController.show);
 //store 
 router.post('/', snakeController.store);
 //delete

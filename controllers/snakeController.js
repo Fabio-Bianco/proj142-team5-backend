@@ -4,12 +4,12 @@ const connection = require("../data/db")
 //index
 function index(req, res) {
 
-    const sql = 
-    
-    `
-    SELECT * 
-    FROM product
-    JOIN snake ON product_id = product.id
+    const sql =
+
+        `
+    SELECT *, snakes.id as snakes_id
+    FROM products
+    JOIN snakes ON products_id = products.id
     `
 
 
@@ -21,10 +21,24 @@ function index(req, res) {
 
 //show
 function show(req, res) {
-    return res.json({
-        Message: 'sei su show'
+
+    const { slug, id } = req.params
+
+    const sql =
+
+    `
+    SELECT *, snakes.id as snakes_id
+    FROM products
+    JOIN snakes ON product_id = products.id
+    WHERE products.slug = ? AND snakes.id = ?
+    `
+
+    connection.query(sql, [slug, id], (err, results) => {
+        if (err) return res.status(500).json({ errorMessage: `Database message error` })
+        res.json(results)
     })
-};
+}
+
 //store
 function store(req, res) {
     return res.json({
