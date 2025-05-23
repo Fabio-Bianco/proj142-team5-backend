@@ -4,7 +4,14 @@ const connection = require("../data/db")
 //index
 function index(req, res) {
 
-    const sql = `SELECT * FROM product`
+    const sql = 
+    
+    `
+    SELECT * 
+    FROM product
+    JOIN snake ON product_id = product.id
+    `
+
 
     connection.query(sql, (err, results) => {
         if (err) return res.status(500).json({ errorMessage: `Database message error` })
