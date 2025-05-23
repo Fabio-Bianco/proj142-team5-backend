@@ -1,10 +1,17 @@
+const connection = require("../data/db")
+
 //CRUD
 //index
 function index(req, res) {
-    return res.json({
-        Message: 'sei su index'
+
+    const sql = `SELECT * FROM product`
+
+    connection.query(sql, (err, results) => {
+        if (err) return res.status(500).json({ errorMessage: `Database message error` })
+        res.json(results)
     })
-};
+}
+
 //show
 function show(req, res) {
     return res.json({
