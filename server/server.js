@@ -1,4 +1,3 @@
-
 // Importa l'app configurata da app.js
 const app = require('../app');
 
