@@ -22,7 +22,7 @@ function index(req, res) {
 //show
 function show(req, res) {
 
-    const { slug, id } = req.params
+    const { product_slug, snake_slug } = req.params
 
     const sql =
 
@@ -30,10 +30,10 @@ function show(req, res) {
     SELECT *, snakes.id as snakes_id
     FROM products
     JOIN snakes ON product_id = products.id
-    WHERE products.product_slug = ? AND snakes.id = ?
+    WHERE products.product_slug = ? AND snakes.snake_slug = ?
     `
 
-    connection.query(sql, [slug, id], (err, results) => {
+    connection.query(sql, [product_slug, snake_slug], (err, results) => {
         if (err) return res.status(500).json({ errorMessage: `Database message error` })
         res.json(results)
     })
