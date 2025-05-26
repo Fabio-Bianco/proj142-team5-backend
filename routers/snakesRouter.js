@@ -9,6 +9,8 @@ router.get('/', snakeController.index);
 router.get('/:slug/:id', snakeController.show);
 //store 
 router.post('/', snakeController.store);
+//patch
+router.patch('/:id', snakeController.patch);
 
 
 module.exports = router;
