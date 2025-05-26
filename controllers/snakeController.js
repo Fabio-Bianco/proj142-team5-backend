@@ -26,11 +26,11 @@ function show(req, res) {
 
     const sql =
 
-        `
+    `
     SELECT *, snakes.id as snakes_id
     FROM products
     JOIN snakes ON product_id = products.id
-    WHERE products.slug = ? AND snakes.id = ?
+    WHERE products.product_slug = ? AND snakes.id = ?
     `
 
     connection.query(sql, [slug, id], (err, results) => {
@@ -41,15 +41,21 @@ function show(req, res) {
 
 //store
 function store(req, res) {
-    return res.json({
-        Message: 'serpente aggiunto'
+
+    const { status, total_price, payment_method, first_name, last_name, address, phone_number, email } = req.body
+    
+    const sql = 
+
+    `
+    INSERT INTO orders (status, total_price, payment_method, first_name, last_name, address, phone_number, email) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `
+    connection.query(sql, [status, total_price, payment_method, first_name, last_name, address, phone_number, email], (err, results) => {
+        if (err) return res.status(500).json({ errorMessage: err })
+        res.status(201).json({ Message: "Order placed!"})
     })
-};
-//delete 
-function destroy(req, res) {
-    return res.json({
-        Message: 'serpente rimosso'
-    })
+
 };
 
-module.exports = { index, show, store, destroy };
+
+module.exports = { index, show, store };

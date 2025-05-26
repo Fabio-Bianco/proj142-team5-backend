@@ -9,7 +9,6 @@ router.get('/', snakeController.index);
 router.get('/:slug/:id', snakeController.show);
 //store 
 router.post('/', snakeController.store);
-//delete
-router.delete('/', snakeController.destroy);
+
 
 module.exports = router;
