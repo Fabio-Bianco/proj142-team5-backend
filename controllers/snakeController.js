@@ -51,7 +51,7 @@ function store(req, res) {
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `
     connection.query(sql, [status, total_price, payment_method, first_name, last_name, address, phone_number, email], (err, results) => {
-        if (err) return res.status(500).json({ errorMessage: err })
+        if (err) return res.status(500).json({ errorMessage: `Database message error` })
         res.status(201).json({ Message: "Order placed!"})
     })
 
