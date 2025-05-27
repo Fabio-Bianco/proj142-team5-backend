@@ -4,7 +4,11 @@ const connection = require("../data/db")
 //index
 function index(req, res) {
 
-    const sql =
+    const {
+        search
+    } = req.query;
+    const preparedParams = [];
+    let sql =
 
         `
     SELECT products.*, habitat, temperament
@@ -12,10 +16,25 @@ function index(req, res) {
     JOIN habitats ON habitat_id = habitats.id
     JOIN temperaments ON temperament_id = temperaments.id
     `
+    if (search) {
+        sql += `
+        WHERE
+            common_name
+        LIKE 
+            ?
+        OR
+            scientific_name
+        LIKE
+            ?
+        `
+        preparedParams.push(`%${search}%`, `%${search}%`)
+    }
 
 
-    connection.query(sql, (err, results) => {
-        if (err) return res.status(500).json({ errorMessage: `Database message error` })
+    connection.query(sql, preparedParams, (err, results) => {
+        if (err) return res.status(500).json({
+            errorMessage: `Database message error`
+        })
         res.json(results)
     })
 }
@@ -23,11 +42,13 @@ function index(req, res) {
 //show
 function show(req, res) {
 
-    const { slug } = req.params
+    const {
+        slug
+    } = req.params
 
     const sql =
 
-    `
+        `
     SELECT products.*, habitat, temperament
     FROM products
     JOIN habitats ON habitat_id = habitats.id
@@ -36,7 +57,9 @@ function show(req, res) {
     `
 
     connection.query(sql, [slug], (err, results) => {
-        if (err) return res.status(500).json({ errorMessage: `Database message error` })
+        if (err) return res.status(500).json({
+            errorMessage: `Database message error`
+        })
         res.json(results)
     })
 }
@@ -44,7 +67,16 @@ function show(req, res) {
 //store
 function store(req, res) {
 
-    const { status, total_price, payment_method, first_name, last_name, address, phone_number, email } = req.body
+    const {
+        status,
+        total_price,
+        payment_method,
+        first_name,
+        last_name,
+        address,
+        phone_number,
+        email
+    } = req.body
 
     const sql =
 
@@ -53,8 +85,12 @@ function store(req, res) {
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `
     connection.query(sql, [status, total_price, payment_method, first_name, last_name, address, phone_number, email], (err, results) => {
-        if (err) return res.status(500).json({ errorMessage: `Database message error` })
-        res.status(201).json({ Message: "Order placed!" })
+        if (err) return res.status(500).json({
+            errorMessage: `Database message error`
+        })
+        res.status(201).json({
+            Message: "Order placed!"
+        })
     })
 
 };
@@ -82,4 +118,8 @@ function store(req, res) {
 
 
 
-module.exports = { index, show, store };
+module.exports = {
+    index,
+    show,
+    store
+};
