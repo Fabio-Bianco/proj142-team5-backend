@@ -9,8 +9,10 @@ router.get('/', snakeController.index);
 router.get('/:slug', snakeController.show);
 //store 
 router.post('/', snakeController.store);
+
+// ROTTA PER MODIFICARE "AVAILABLE" CHE ATTUALMENTE NON SERVE
 //patch
-router.patch('/:id', snakeController.patch);
+// router.patch('/:id', snakeController.patch);
 
 
 module.exports = router;

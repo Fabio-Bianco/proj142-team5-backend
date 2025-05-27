@@ -59,28 +59,27 @@ function store(req, res) {
 
 };
 
+
+// CHIAMATA PER MODIFICARE "AVAILABLE" CHE ATTUALMENTE NON SERVE
+
 //patch
-function patch(req, res) {
+// function patch(req, res) {
 
-    const { id } = req.params
+//     const { id } = req.params
 
-    const sql =
-
-        `
-    UPDATE products
-    JOIN snakes ON snakes.product_id = products.id
-    SET products.stock = (products.stock-1), snakes.available = 0
-    WHERE snakes.id = ?;
-
-    `
-
-    connection.query(sql, [id], (err, results) => {
-        if (err) return res.status(500).json({ errorMessage: `Database message error` })
-        res.status(200).json({ Message: "Data changed successfully, stock updated!" })
-    })
-
-}
+//     const sql = ""
 
 
 
-module.exports = { index, show, store, patch };
+//     connection.query(sql, [id], (err, results) => {
+//         if (err) return res.status(500).json({ errorMessage: `Database message error` })
+//         res.status(200).json({ Message: "Data changed successfully, stock updated!" })
+//     })
+
+// } 
+
+
+
+
+
+module.exports = { index, show, store };
