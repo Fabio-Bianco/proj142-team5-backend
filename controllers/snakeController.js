@@ -6,7 +6,7 @@ function index(req, res) {
 
     const sql =
 
-    `
+        `
     SELECT products.*, habitat, temperament
     FROM products
     JOIN habitats ON habitat_id = habitats.id
@@ -23,18 +23,19 @@ function index(req, res) {
 //show
 function show(req, res) {
 
-    const { product_slug, snake_slug } = req.params
+    const { slug } = req.params
 
     const sql =
 
-        `
-    SELECT *, snakes.id as snakes_id
+    `
+    SELECT products.*, habitat, temperament
     FROM products
-    JOIN snakes ON product_id = products.id
-    WHERE products.product_slug = ? AND snakes.snake_slug = ?
+    JOIN habitats ON habitat_id = habitats.id
+    JOIN temperaments ON temperament_id = temperaments.id
+    WHERE products.slug = ?
     `
 
-    connection.query(sql, [product_slug, snake_slug], (err, results) => {
+    connection.query(sql, [slug], (err, results) => {
         if (err) return res.status(500).json({ errorMessage: `Database message error` })
         res.json(results)
     })
@@ -63,9 +64,9 @@ function patch(req, res) {
 
     const { id } = req.params
 
-    const sql = 
+    const sql =
 
-    `
+        `
     UPDATE products
     JOIN snakes ON snakes.product_id = products.id
     SET products.stock = (products.stock-1), snakes.available = 0
