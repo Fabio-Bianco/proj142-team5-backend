@@ -6,10 +6,11 @@ function index(req, res) {
 
     const sql =
 
-        `
-    SELECT *, snakes.id as snakes_id
+    `
+    SELECT products.*, habitat, temperament
     FROM products
-    JOIN snakes ON product_id = products.id
+    JOIN habitats ON habitat_id = habitats.id
+    JOIN temperaments ON temperament_id = temperaments.id
     `
 
 
