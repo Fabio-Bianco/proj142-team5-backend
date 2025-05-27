@@ -2,7 +2,15 @@
 const express = require('express');
 // Crea un'app Express
 const app = express();
-// Middleware base (puoi aggiungerne altri in futuro)
+//importo il middleware cors
+const cors = require('cors');
+//registri il middleware cors
+app.use(cors({
+    origin: process.env.FE_APP
+}));
+//registro middleware asset statici
+app.use(express.static('public'));
+//registro middleware body parser
 app.use(express.json());
 //importo il router
 const snakesRouter = require('./routers/snakesRouter');
@@ -12,7 +20,7 @@ const errorsHandler = require('./middlewares/errorsHandler');
 const notFound = require('./middlewares/notFound');
 
 
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
     res.send('Benvenuto da Sergente Serpente!')
 });
 //registro la path del router
