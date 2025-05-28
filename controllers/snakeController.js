@@ -2,7 +2,7 @@ const connection = require("../data/db");
 
 // GET: Lista serpenti con ordinamento e filtri dinamici
 function index(req, res) {
-  const { sort, habitat, temperament } = req.query;
+  const { sort, habitat, temperament, discount } = req.query;
 
   // Mapping valori validi per l'ordinamento
   const validSorts = {
@@ -21,6 +21,12 @@ function index(req, res) {
   `;
 
   const params = [];
+
+  // filtro sconto
+  if (discount) {
+    sql += " AND discount != 0"
+    params.push(discount)
+  }
 
   // Filtro habitat
   if (habitat) {
