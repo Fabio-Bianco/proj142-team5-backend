@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
     res.send('Benvenuto da Sergente Serpente!')
 });
 //registro la path del router
-app.use('/api/snakes', snakesRouter);
+app.use('/snakes', snakesRouter);
 //registro middleware errorsHandler
 app.use(errorsHandler);
 //registro middleware notFound
