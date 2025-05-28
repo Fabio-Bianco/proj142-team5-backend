@@ -1,10 +1,8 @@
 const connection = require("../data/db");
 
-// GET: Lista serpenti con ordinamento e filtri dinamici
 function index(req, res) {
   const { sort, habitat, temperament, discount } = req.query;
 
-  // Mapping valori validi per l'ordinamento
   const validSorts = {
     name: "LOWER(common_name) ASC",
     name_desc: "LOWER(common_name) DESC",
@@ -22,32 +20,25 @@ function index(req, res) {
 
   const params = [];
 
-  // filtro sconto
-  if (discount) {
-    sql += " AND discount != 0"
-    params.push(discount)
+  // Filtro per sconto booleano
+  if (discount === "true") {
+    sql += " AND products.discount > 0";
+  } else if (discount === "false") {
+    sql += " AND products.discount = 0";
   }
 
-  // Filtro habitat
   if (habitat) {
     sql += " AND habitats.habitat = ?";
     params.push(habitat);
   }
 
-  // Filtro temperamento
   if (temperament) {
     sql += " AND temperaments.temperament = ?";
     params.push(temperament);
   }
 
-  // Aggiungi ordinamento se valido
-  if (validSorts[sort]) {
-    sql += ` ORDER BY ${validSorts[sort]}`;
-  } else {
-    sql += ` ORDER BY LOWER(common_name) ASC`; // default
-  }
+  sql += validSorts[sort] ? ` ORDER BY ${validSorts[sort]}` : ` ORDER BY LOWER(common_name) ASC`;
 
-  // Esegui la query
   connection.query(sql, params, (err, results) => {
     if (err) {
       console.error("Errore DB:", err);
@@ -57,7 +48,6 @@ function index(req, res) {
   });
 }
 
-// GET: Dettaglio serpente per slug
 function show(req, res) {
   const { slug } = req.params;
 
