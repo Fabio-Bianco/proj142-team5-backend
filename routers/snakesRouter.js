@@ -1,18 +1,8 @@
-const express = require('express');
-//creo router con express
+const express = require("express");
 const router = express.Router();
+const snakeController = require("../controllers/snakeController");
 
-const snakeController = require('../controllers/snakeController');
-//index
-router.get('/', snakeController.index);
-//show
-router.get('/:slug', snakeController.show);
-//store 
-router.post('/', snakeController.store);
-
-// ROTTA PER MODIFICARE "AVAILABLE" CHE ATTUALMENTE NON SERVE
-//patch
-// router.patch('/:id', snakeController.patch);
-
+router.get("/", snakeController.index);
+router.get("/:slug", snakeController.show);
 
 module.exports = router;
