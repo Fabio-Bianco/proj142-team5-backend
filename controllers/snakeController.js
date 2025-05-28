@@ -1,9 +1,10 @@
 const connection = require("../data/db");
 
-// GET: Lista serpenti con ordinamento dinamico
+// GET: Lista serpenti con ordinamento e filtri dinamici
 function index(req, res) {
-  const { sort } = req.query;
+  const { sort, habitat, temperament } = req.query;
 
+  // Mapping valori validi per l'ordinamento
   const validSorts = {
     name: "LOWER(common_name) ASC",
     name_desc: "LOWER(common_name) DESC",
@@ -12,16 +13,39 @@ function index(req, res) {
   };
 
   let sql = `
-    SELECT products.*, habitat, temperament
+    SELECT products.*, habitats.habitat, temperaments.temperament
     FROM products
-    JOIN habitats ON habitat_id = habitats.id
-    JOIN temperaments ON temperament_id = temperaments.id
-    ORDER BY ${validSorts[sort] || "LOWER(common_name) ASC"}
+    JOIN habitats ON products.habitat_id = habitats.id
+    JOIN temperaments ON products.temperament_id = temperaments.id
+    WHERE 1
   `;
 
-  connection.query(sql, (err, results) => {
+  const params = [];
+
+  // Filtro habitat
+  if (habitat) {
+    sql += " AND habitats.habitat = ?";
+    params.push(habitat);
+  }
+
+  // Filtro temperamento
+  if (temperament) {
+    sql += " AND temperaments.temperament = ?";
+    params.push(temperament);
+  }
+
+  // Aggiungi ordinamento se valido
+  if (validSorts[sort]) {
+    sql += ` ORDER BY ${validSorts[sort]}`;
+  } else {
+    sql += ` ORDER BY LOWER(common_name) ASC`; // default
+  }
+
+  // Esegui la query
+  connection.query(sql, params, (err, results) => {
     if (err) {
-      return res.status(500).json({ errorMessage: "Database message error" });
+      console.error("Errore DB:", err);
+      return res.status(500).json({ errorMessage: "Errore del database" });
     }
     res.json(results);
   });
@@ -32,22 +56,20 @@ function show(req, res) {
   const { slug } = req.params;
 
   const sql = `
-    SELECT products.*, habitat, temperament
+    SELECT products.*, habitats.habitat, temperaments.temperament
     FROM products
-    JOIN habitats ON habitat_id = habitats.id
-    JOIN temperaments ON temperament_id = temperaments.id
+    JOIN habitats ON products.habitat_id = habitats.id
+    JOIN temperaments ON products.temperament_id = temperaments.id
     WHERE products.slug = ?
   `;
 
   connection.query(sql, [slug], (err, results) => {
     if (err) {
-      return res.status(500).json({ errorMessage: "Database message error" });
+      console.error("Errore DB:", err);
+      return res.status(500).json({ errorMessage: "Errore del database" });
     }
     res.json(results[0] || {});
   });
 }
 
-module.exports = {
-  index,
-  show
-};
+module.exports = { index, show };
