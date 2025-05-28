@@ -1,125 +1,53 @@
-const connection = require("../data/db")
+const connection = require("../data/db");
 
-//CRUD
-//index
+// GET: Lista serpenti con ordinamento dinamico
 function index(req, res) {
+  const { sort } = req.query;
 
-    const {
-        search
-    } = req.query;
-    const preparedParams = [];
-    let sql =
+  const validSorts = {
+    name: "LOWER(common_name) ASC",
+    name_desc: "LOWER(common_name) DESC",
+    price: "price ASC",
+    price_desc: "price DESC"
+  };
 
-        `
+  let sql = `
     SELECT products.*, habitat, temperament
     FROM products
     JOIN habitats ON habitat_id = habitats.id
     JOIN temperaments ON temperament_id = temperaments.id
-    `
-    if (search) {
-        sql += `
-        WHERE
-            common_name
-        LIKE 
-            ?
-        OR
-            scientific_name
-        LIKE
-            ?
-        `
-        preparedParams.push(`%${search}%`, `%${search}%`)
+    ORDER BY ${validSorts[sort] || "LOWER(common_name) ASC"}
+  `;
+
+  connection.query(sql, (err, results) => {
+    if (err) {
+      return res.status(500).json({ errorMessage: "Database message error" });
     }
-
-
-    connection.query(sql, preparedParams, (err, results) => {
-        if (err) return res.status(500).json({
-            errorMessage: `Database message error`
-        })
-        res.json(results)
-    })
+    res.json(results);
+  });
 }
 
-//show
+// GET: Dettaglio serpente per slug
 function show(req, res) {
+  const { slug } = req.params;
 
-    const {
-        slug
-    } = req.params
-
-    const sql =
-
-        `
+  const sql = `
     SELECT products.*, habitat, temperament
     FROM products
     JOIN habitats ON habitat_id = habitats.id
     JOIN temperaments ON temperament_id = temperaments.id
     WHERE products.slug = ?
-    `
+  `;
 
-    connection.query(sql, [slug], (err, results) => {
-        if (err) return res.status(500).json({
-            errorMessage: `Database message error`
-        })
-        res.json(results)
-    })
+  connection.query(sql, [slug], (err, results) => {
+    if (err) {
+      return res.status(500).json({ errorMessage: "Database message error" });
+    }
+    res.json(results[0] || {});
+  });
 }
 
-//store
-function store(req, res) {
-
-    const {
-        status,
-        total_price,
-        payment_method,
-        first_name,
-        last_name,
-        address,
-        phone_number,
-        email
-    } = req.body
-
-    const sql =
-
-        `
-    INSERT INTO orders (status, total_price, payment_method, first_name, last_name, address, phone_number, email) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `
-    connection.query(sql, [status, total_price, payment_method, first_name, last_name, address, phone_number, email], (err, results) => {
-        if (err) return res.status(500).json({
-            errorMessage: `Database message error`
-        })
-        res.status(201).json({
-            Message: "Order placed!"
-        })
-    })
-
-};
-
-
-// CHIAMATA PER MODIFICARE "AVAILABLE" CHE ATTUALMENTE NON SERVE
-
-//patch
-// function patch(req, res) {
-
-//     const { id } = req.params
-
-//     const sql = ""
-
-
-
-//     connection.query(sql, [id], (err, results) => {
-//         if (err) return res.status(500).json({ errorMessage: `Database message error` })
-//         res.status(200).json({ Message: "Data changed successfully, stock updated!" })
-//     })
-
-// } 
-
-
-
-
-
 module.exports = {
-    index,
-    show,
-    store
+  index,
+  show
 };

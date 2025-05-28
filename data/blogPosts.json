@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "title": "Guida per principianti: Il tuo primo serpente",
+    "category": "Neofiti",
+    "excerpt": "Hai sempre desiderato allevare un serpente ma non sai da dove iniziare? Ecco cosa sapere prima di acquistare il tuo primo esemplare.",
+    "image": "/assets/blog/guida-principianti.jpg",
+    "author": "Team SerpentiDoc",
+    "date": "2024-11-15"
+  },
+  {
+    "id": 2,
+    "title": "Serpente del grano: l'amico perfetto per iniziare",
+    "category": "Specie consigliate",
+    "excerpt": "Docile, robusto e bellissimo: scopri perché il Pantherophis guttatus è la scelta numero uno tra gli allevatori alle prime armi.",
+    "image": "/assets/blog/serpente-grano.jpg",
+    "author": "Luca Ramarro",
+    "date": "2025-01-20"
+  },
+  {
+    "id": 3,
+    "title": "Come funziona la muta nei serpenti?",
+    "category": "Curiosità scientifiche",
+    "excerpt": "Un processo affascinante che permette ai serpenti di crescere e rigenerarsi: ecco cosa accade durante la muta.",
+    "image": "/assets/blog/muta-serpenti.jpg",
+    "author": "Dr. Erika Balestra",
+    "date": "2025-03-10"
+  },
+  {
+    "id": 4,
+    "title": "I serpenti nel cinema: da Harry Potter a Anaconda",
+    "category": "Cultura pop",
+    "excerpt": "Spaventosi, affascinanti, leggendari: i serpenti hanno sempre avuto un ruolo speciale nella settima arte.",
+    "image": "/assets/blog/serpenti-cinema.jpg",
+    "author": "Giulia Pitone",
+    "date": "2025-04-01"
+  },
+  {
+    "id": 5,
+    "title": "CITES e legalità: cosa devi sapere prima di acquistare",
+    "category": "Normativa",
+    "excerpt": "Non tutti i serpenti sono uguali agli occhi della legge: scopri quali certificazioni servono per possedere certe specie.",
+    "image": "/assets/blog/cites.jpg",
+    "author": "Federico Legale",
+    "date": "2025-02-12"
+  },
+  {
+    "id": 6,
+    "title": "10 errori da evitare quando allevi un serpente",
+    "category": "Consigli pratici",
+    "excerpt": "Dall’umidità sbagliata al substrato tossico: ecco cosa evitare per mantenere il tuo serpente in salute.",
+    "image": "/assets/blog/errori-allevamento.jpg",
+    "author": "Marco Boa",
+    "date": "2025-03-22"
+  },
+  {
+    "id": 7,
+    "title": "Scoperta una nuova specie in Amazzonia",
+    "category": "Scoperte scientifiche",
+    "excerpt": "Un team di ricercatori ha identificato una nuova specie di serpente arboricolo: ecco tutti i dettagli.",
+    "image": "/assets/blog/scoperta-amazzonia.jpg",
+    "author": "Redazione SnakeLab",
+    "date": "2025-05-01"
+  }
+]
