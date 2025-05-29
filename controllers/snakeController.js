@@ -1,7 +1,7 @@
 const connection = require("../data/db");
 
 function index(req, res) {
-  const { sort, habitat, temperament, discount } = req.query;
+  const { sort, habitat, temperament, discount, morph } = req.query;
 
   const validSorts = {
     name: "LOWER(common_name) ASC",
@@ -20,7 +20,15 @@ function index(req, res) {
 
   const params = [];
 
-  // Filtro per sconto booleano
+  //filtro per morph
+  if (morph === "true") {
+    sql += " AND morph != 'normal'"
+  } else if (discount === "false") {
+    sql += " AND MORPH = 'normal'"
+  }
+
+
+  //filtro sconto
   if (discount === "true") {
     sql += " AND products.discount > 0";
   } else if (discount === "false") {
