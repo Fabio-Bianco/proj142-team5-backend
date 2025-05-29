@@ -7,7 +7,8 @@ function index(req, res) {
     name: "LOWER(common_name) ASC",
     name_desc: "LOWER(common_name) DESC",
     price: "price ASC",
-    price_desc: "price DESC"
+    price_desc: "price DESC",
+    birth: "birth DESC"
   };
 
   let sql = `
@@ -35,16 +36,19 @@ function index(req, res) {
     sql += " AND products.discount = 0";
   }
 
+  //filtro habitat
   if (habitat) {
     sql += " AND habitats.habitat = ?";
     params.push(habitat);
   }
 
+  //filtro temperamento
   if (temperament) {
     sql += " AND temperaments.temperament = ?";
     params.push(temperament);
   }
 
+  //filtro 
   sql += validSorts[sort] ? ` ORDER BY ${validSorts[sort]}` : ` ORDER BY LOWER(common_name) ASC`;
 
   connection.query(sql, params, (err, results) => {
