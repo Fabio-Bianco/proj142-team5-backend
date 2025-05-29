@@ -23,8 +23,8 @@ function index(req, res) {
   //filtro per morph
   if (morph === "true") {
     sql += " AND morph != 'normal'"
-  } else if (discount === "false") {
-    sql += " AND MORPH = 'normal'"
+  } else if (morph === "false") {
+    sql += " AND morph = 'normal'"
   }
 
 
