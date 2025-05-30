@@ -1,7 +1,7 @@
 const connection = require("../data/db");
 
 function index(req, res) {
-  const { sort, habitat, temperament, discount, morph } = req.query;
+  const { sort, habitat, temperament, discount, morph, search } = req.query;
 
   const validSorts = {
     name: "LOWER(common_name) ASC",
@@ -21,34 +21,39 @@ function index(req, res) {
 
   const params = [];
 
-  //filtro per morph
-  if (morph === "true") {
-    sql += " AND morph != 'normal'"
-  } else if (morph === "false") {
-    sql += " AND morph = 'normal'"
+  // 🔍 Filtro di ricerca istantanea sul nome comune
+  if (search) {
+    sql += " AND LOWER(products.common_name) LIKE ?";
+    params.push(`%${search.toLowerCase()}%`);
   }
 
+  // filtro per morph
+  if (morph === "true") {
+    sql += " AND morph != 'normal'";
+  } else if (morph === "false") {
+    sql += " AND morph = 'normal'";
+  }
 
-  //filtro sconto
+  // filtro sconto
   if (discount === "true") {
     sql += " AND products.discount > 0";
   } else if (discount === "false") {
     sql += " AND products.discount = 0";
   }
 
-  //filtro habitat
+  // filtro habitat
   if (habitat) {
     sql += " AND habitats.habitat = ?";
     params.push(habitat);
   }
 
-  //filtro temperamento
+  // filtro temperamento
   if (temperament) {
     sql += " AND temperaments.temperament = ?";
     params.push(temperament);
   }
 
-  //filtro 
+  // ordinamento
   sql += validSorts[sort] ? ` ORDER BY ${validSorts[sort]}` : ` ORDER BY LOWER(common_name) ASC`;
 
   connection.query(sql, params, (err, results) => {
