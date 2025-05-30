@@ -8,7 +8,7 @@ function index(req, res) {
     name_desc: "LOWER(common_name) DESC",
     price: "price ASC",
     price_desc: "price DESC",
-    birth: "birth DESC"
+    birth: "birth DESC LIMIT 6"
   };
 
   let sql = `
