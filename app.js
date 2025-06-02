@@ -12,8 +12,10 @@ app.use(cors({
 app.use(express.static('public'));
 //registro middleware body parser
 app.use(express.json());
-//importo il router
+//importo il router snakes
 const snakesRouter = require('./routers/snakesRouter');
+//importo il router orders
+const ordersRouter = require('./routers/ordersRouter');
 //importo middleware errorsHandler
 const errorsHandler = require('./middlewares/errorsHandler');
 //importo middleware notFound
@@ -23,8 +25,10 @@ const notFound = require('./middlewares/notFound');
 app.get('/', (req, res) => {
     res.send('Benvenuto da Sergente Serpente!')
 });
-//registro la path del router
+//registro la path del router snakes
 app.use('/api/snakes', snakesRouter);
+//registro la path del router orders
+app.use('/api/orders', ordersRouter);
 //registro middleware errorsHandler
 app.use(errorsHandler);
 //registro middleware notFound

@@ -58,7 +58,6 @@ function index(req, res) {
 
   connection.query(sql, params, (err, results) => {
     if (err) {
-      console.error("Errore DB:", err);
       return res.status(500).json({ errorMessage: "Errore del database" });
     }
     res.json(results);
@@ -78,7 +77,6 @@ function show(req, res) {
 
   connection.query(sql, [slug], (err, results) => {
     if (err) {
-      console.error("Errore DB:", err);
       return res.status(500).json({ errorMessage: "Errore del database" });
     }
     res.json(results[0] || {});
