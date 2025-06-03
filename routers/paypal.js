@@ -1,6 +1,5 @@
 const express = require("express");
 const got = require("got");
-
 const router = express.Router();
 
 const getAccessToken = async () => {
@@ -10,16 +9,23 @@ const getAccessToken = async () => {
                 form: {
                     grant_type: "client_credentials",
                 },
-                username: process.env.PAYPAL_CLIENTID,
-                password: process.env.PAYPAL_SECRET,
+                headers: {
+                    Authorization: "Basic " + Buffer.from(
+                        `${process.env.PAYPAL_CLIENTID}:${process.env.PAYPAL_SECRET}`
+                    ).toString("base64"),
+                },
+                responseType: "json",
             }
         );
-        console.log(response.body);
-        const data = JSON.parse(response.body);
-        const newAccessToken = data.access_token;
-        return newAccessToken;
+        return response.body.access_token;
     } catch (err) {
-        throw new Error(err);
+        // Log dettagliato per capire l'errore
+        if (err.response) {
+            console.error("PayPal token error:", err.response.body);
+        } else {
+            console.error("PayPal token error:", err.message);
+        }
+        throw err;
     }
 };
 
@@ -44,7 +50,7 @@ const createOrder = async (req, res) => {
                                 currency_code: "USD",
                                 value: "100.00",
                             },
-                        }, ],
+                        }],
                         amount: {
                             currency_code: "USD",
                             value: "100.00",
@@ -55,15 +61,15 @@ const createOrder = async (req, res) => {
                                 },
                             },
                         },
-                    }, ],
+                    }],
                     payment_source: {
                         paypal: {
                             experience_context: {
                                 payment_method_preference: "IMMEDIATE_PAYMENT_REQUIRED",
                                 payment_method_selected: "PAYPAL",
                                 brand_name: "Sergente Serpente",
-                                shipping_preference: "NO_SHIPPING", //si puo cambiare
-                                locale: "en-US", //provare mettere "it_EU"
+                                shipping_preference: "NO_SHIPPING",
+                                locale: "en-US",
                                 user_action: "PAY_NOW",
                                 return_url: `${process.env.PAYPAL_REDIRECT_BASE_URL}/complete-payment`,
                                 cancel_url: `${process.env.PAYPAL_REDIRECT_BASE_URL}/cancel-payment`,
@@ -79,22 +85,76 @@ const createOrder = async (req, res) => {
 
         const orderId = response.body && response.body.id;
 
-
-
         return res.status(200).json({
             orderId
         });
     } catch (err) {
-        res.status(500).json({
-            error: "Internal server error."
-        });
+        // Log dettagliato per capire l'errore
+        if (err.response) {
+            console.error("PayPal createOrder error:", err.response.body);
+            return res.status(500).json({
+                error: err.response.body
+            });
+        } else {
+            console.error("PayPal createOrder error:", err.message);
+            return res.status(500).json({
+                error: err.message
+            });
+        }
     }
 };
 
-router.post("/createorder", createOrder);
+const captureOrder = async (req, res) => {
+    try {
+        const {
+            orderId
+        } = req.body;
+        const accessToken = await getAccessToken();
 
+        const response = await got.post(
+            `${process.env.PAYPAL_BASEURL}/v2/checkout/orders/${orderId}/capture`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                responseType: "json",
+            }
+        );
+
+        if (response.body.status === "COMPLETED") {
+            return res.status(200).json({
+                status: "COMPLETED"
+            });
+        } else {
+            return res.status(400).json({
+                status: response.body.status
+            });
+        }
+    } catch (err) {
+        // Log dettagliato per capire l'errore
+        if (err.response) {
+            console.error("PayPal captureOrder error:", err.response.body);
+            return res.status(500).json({
+                error: err.response.body
+            });
+        } else {
+            console.error("PayPal captureOrder error:", err.message);
+            return res.status(500).json({
+                error: err.message
+            });
+        }
+    }
+};
+
+router.post("/createorder", (req, res, next) => {
+    console.log("Richiesta ricevuta su /paypal/createorder");
+    createOrder(req, res).catch(next);
+});
+router.post("/captureorder", (req, res, next) => {
+    console.log("Richiesta ricevuta su /paypal/captureorder");
+    captureOrder(req, res).catch(next);
+});
 module.exports = router;
-
 
 
 

@@ -3,7 +3,7 @@ const express = require('express');
 // Importa il modulo dotenv
 const dotenv = require('dotenv');
 //importo le rotte paypal
-const paypalRoutes = require('./routers/paypal');
+const paypalRouter = require('./routers/paypal');
 // Crea un'app Express
 const app = express();
 // configuro il dotenv
@@ -19,7 +19,7 @@ app.use(express.static('public'));
 //registro middleware body parser
 app.use(express.json());
 //importo il routr paypal
-app.use("/paypal", paypalRoutes);
+app.use("/paypal", paypalRouter);
 //importo il router snakes
 const snakesRouter = require('./routers/snakesRouter');
 //importo il router orders
