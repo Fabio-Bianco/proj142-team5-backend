@@ -33,11 +33,11 @@ const createOrder = async (req, res) => {
     try {
         const accessToken = await getAccessToken();
 
-        // const { totalPrice } = req.body;
+        const { total } = req.body;
 
-        // if (!totalPrice) {
-        //     return res.status(400).json({ error: "Total amount is required." });
-        // }
+        if (!total) {
+            return res.status(400).json({ error: "Total amount is required." });
+        }
 
         const response = await got.post(
             `${process.env.PAYPAL_BASEURL}/v2/checkout/orders`, {
@@ -59,11 +59,11 @@ const createOrder = async (req, res) => {
                         // }],
                         amount: {
                             currency_code: "USD",
-                            value: "100.00", // total_price
+                            value: total,
                             breakdown: {
                                 item_total: {
                                     currency_code: "USD",
-                                    value: "100.00", // total_price
+                                    value: total,
                                 },
                             },
                         },
@@ -139,7 +139,7 @@ const captureOrder = async (req, res) => {
     } catch (err) {
         // Log dettagliato per capire l'errore
         if (err.response) {
-            console.error("PayPal captureOrder error:", err.response.body);
+            console.error("PayPal createOrder error response body:", err.response.body);
             return res.status(500).json({
                 error: err.response.body
             });
