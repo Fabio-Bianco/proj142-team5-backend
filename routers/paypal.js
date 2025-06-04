@@ -33,6 +33,12 @@ const createOrder = async (req, res) => {
     try {
         const accessToken = await getAccessToken();
 
+        // const { totalPrice } = req.body;
+
+        // if (!totalPrice) {
+        //     return res.status(400).json({ error: "Total amount is required." });
+        // }
+
         const response = await got.post(
             `${process.env.PAYPAL_BASEURL}/v2/checkout/orders`, {
                 headers: {
@@ -42,22 +48,22 @@ const createOrder = async (req, res) => {
                 json: {
                     intent: "CAPTURE",
                     purchase_units: [{
-                        items: [{
-                            name: "boa costrictor",
-                            description: "serpentone",
-                            quantity: "1",
-                            unit_amount: {
-                                currency_code: "USD",
-                                value: "100.00",
-                            },
-                        }],
+                        // items: [{
+                        //     name: "boa costrictor",
+                        //     description: "serpentone",
+                        //     quantity: "1",
+                        //     unit_amount: {
+                        //         currency_code: "USD",
+                        //         value: "100.00",
+                        //     },
+                        // }],
                         amount: {
                             currency_code: "USD",
-                            value: "100.00",
+                            value: totalPrice || "100.00",
                             breakdown: {
                                 item_total: {
                                     currency_code: "USD",
-                                    value: "100.00",
+                                    value: totalPrice || "100.00",
                                 },
                             },
                         },
