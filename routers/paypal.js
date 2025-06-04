@@ -59,11 +59,11 @@ const createOrder = async (req, res) => {
                         // }],
                         amount: {
                             currency_code: "USD",
-                            value: totalPrice || "100.00",
+                            value: "100.00", // total_price
                             breakdown: {
                                 item_total: {
                                     currency_code: "USD",
-                                    value: totalPrice || "100.00",
+                                    value: "100.00", // total_price
                                 },
                             },
                         },
