@@ -50,11 +50,11 @@ const createOrder = async (req, res) => {
                     purchase_units: [{
 
                         amount: {
-                            currency_code: "USD",
+                            currency_code: "EUR",
                             value: total,
                             breakdown: {
                                 item_total: {
-                                    currency_code: "USD",
+                                    currency_code: "EUR",
                                     value: total,
                                 },
                             },
